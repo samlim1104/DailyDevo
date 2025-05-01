@@ -1,4 +1,4 @@
-// Filename - components/Logo.js
+// Filename - components/Header/Logo.js
 import React from 'react';
 
 function Logo() {
