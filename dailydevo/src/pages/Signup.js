@@ -3,7 +3,7 @@ import React from 'react';
 import { useState } from 'react';
 import Header from '../components/Header/Header.js';
 
-export default function SignUpForm() {
+export default function Signup() {
     const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [msg, setMsg] = useState("");
