@@ -30,14 +30,13 @@ function Header() {
             <div style={innerStyle}>
                <Logo />
                 <div style={buttonGroupStyle}>
-                    <Button label="home" />
-                    <Button label="about" />
-                    <Button label="login" />
-                    <Button label="signup" />
+                    <Button label="home" to="/"/>
+                    <Button label="about" to="/about" />
+                    <Button label="login" to="/login" />
+                    <Button label="signup" to="/signup"/>
                 </div>
             </div>
         </div>
-        
     );
 }
 

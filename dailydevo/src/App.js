@@ -1,15 +1,24 @@
 // Filename - App.js
 import React from 'react';
-import Header from './components/Header/Header.js';
-import Bible from './components/Bible/Bible.js';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
+import Home from './pages/Home';
+import About from './pages/About';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
 
 function App() {
 
     return (
-        <div style={{ backgroundColor: '#F7E4CB', minHeight: '100vh' }}>
-            <Header />
-            <Bible />
-        </div>
+      <Router>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              {/* Add other pages here */}
+              <Route path="/about" element={<About />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+            </Routes>
+      </Router>
     );
 }
 
