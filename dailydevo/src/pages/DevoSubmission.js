@@ -4,6 +4,7 @@ import LoggedInHeader from '../components/Header/LoggedInHeader.js';
 import Button from '../components/Header/Button.js';
 
 function DevoSubmission() {
+    
     const contentStyle = {
         display: 'flex',
         justifyContent: 'center',
