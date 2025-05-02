@@ -83,4 +83,39 @@ app.post("/api/upload-devo", upload.single("file"), async (req, res) => {
   }
 });
 
+app.get("/api/daily-image", async (req, res) => {
+  const { username } = req.query;
+  const today = formatDate();
+
+  try {
+      const devo = await Devo.findOne({ 
+          username, 
+          uploadDate: today 
+      });
+
+      if (!devo) return res.json({ imageUrl: null });
+
+      // Convert buffer to base64 with proper MIME type
+      const mimeType = getMimeType(devo.fileName);
+      const base64Image = devo.fileBuffer.toString('base64');
+      const imageUrl = `data:${mimeType};base64,${base64Image}`;
+
+      res.json({ imageUrl });
+  } catch (err) {
+      console.error(err);
+      res.status(500).send("Server error");
+  }
+});
+
+// Add MIME type helper function
+function getMimeType(filename) {
+  const ext = filename.split('.').pop().toLowerCase();
+  switch(ext) {
+      case 'jpg': case 'jpeg': return 'image/jpeg';
+      case 'png': return 'image/png';
+      case 'gif': return 'image/gif';
+      default: return 'application/octet-stream';
+  }
+}
+
 app.listen(3000, () => console.log("Server running on http://localhost:3000"));

@@ -8,6 +8,9 @@ function DailyDevo() {
 
     const [imageUrl, setImageUrl] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState('');
+
+    const username = localStorage.getItem("username");
 
     const getFormattedDate = () => {
         const today = new Date();
@@ -27,15 +30,26 @@ function DailyDevo() {
     };
 
     useEffect(() => {
-        axios.get('http://localhost:5000/api/daily-image')
-            .then(res => {
-                setImageUrl(res.data.imageUrl);
+        const fetchDailyImage = async () => {
+            try {
+                const response = await axios.get(
+                    `http://localhost:3000/api/daily-image?username=${username}&date=${getFormattedDate()}`
+                );
+                if (response.data.imageUrl) {
+                    setImageUrl(response.data.imageUrl);
+                } else {
+                    setError('No image found for today');
+                }
+            } catch (err) {
+                setError('Failed to load daily image');
+                console.error('API Error:', err);
+            } finally {
                 setLoading(false);
-            })
-            .catch(() => {
-                setLoading(false);
-            });
-    }, []);
+            }
+        };
+
+        fetchDailyImage();
+    }, [username]);
 
     return (
         <div style={{ backgroundColor: '#F7E4CB', minHeight: '100vh' }}>
@@ -44,29 +58,23 @@ function DailyDevo() {
                 {getFormattedDate()}
             </h1>
 
-            <div style={{
-                margin: '40px auto',
-                width: '300px',
-                height: '300px',
-                backgroundColor: '#FFF',
-                border: '2px dashed #ccc',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                borderRadius: '16px',
-                overflow: 'hidden',
-            }}>
+            <div style={{ margin: '40px auto', width: '300px', height: '300px', 
+                        backgroundColor: '#FFF', border: '2px dashed #ccc', 
+                        display: 'flex', alignItems: 'center', justifyContent: 'center', 
+                        borderRadius: '16px', overflow: 'hidden' }}>
                 {loading ? (
                     <p>Loading...</p>
+                ) : error ? (
+                    <p>{error}</p>
                 ) : imageUrl ? (
-                    <img src={imageUrl} alt="Daily Devo" style={{ maxWidth: '100%', maxHeight: '100%' }} />
+                    <img src={imageUrl} alt="Daily Devo" 
+                         style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }} />
                 ) : (
                     <p>No image for today</p>
                 )}
             </div>
         </div>
     );
-  
 }
 
 export default DailyDevo;
