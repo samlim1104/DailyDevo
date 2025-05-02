@@ -31,7 +31,7 @@ function Header() {
                <Logo />
                 <div style={buttonGroupStyle}>
                     <Button label="upload" to="/upload" />
-                    <Button label="logout" to="/logout" />
+                    <Button label="logout" to="/" />
                 </div>
             </div>
         </div>
