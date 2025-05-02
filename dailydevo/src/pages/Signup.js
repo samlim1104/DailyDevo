@@ -2,6 +2,7 @@
 import React from 'react';
 import { useState } from 'react';
 import Header from '../components/Header/Header.js';
+import { useNavigate } from 'react-router-dom';
 
 export default function Signup() {
     const contentStyle = {
@@ -27,6 +28,7 @@ export default function Signup() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [msg, setMsg] = useState("");
+    const navigate = useNavigate();
 
     const handleSignup = async () => {
         const res = await fetch("http://localhost:3000/signup", {
@@ -36,6 +38,10 @@ export default function Signup() {
         });
         const text = await res.text();
         setMsg(text);
+
+        if (res.ok) {
+            navigate('/daily');
+        }
     };
 
     return (

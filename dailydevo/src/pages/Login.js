@@ -3,6 +3,7 @@ import React from 'react';
 import Header from '../components/Header/Header.js';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
     const contentStyle = {
@@ -29,6 +30,7 @@ export default function Login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [msg, setMsg] = useState("");
+    const navigate = useNavigate();
 
     const handleLogin = async () => {
         const res = await fetch("http://localhost:3000/login", {
@@ -38,6 +40,10 @@ export default function Login() {
         });
         const text = await res.text();
         setMsg(text);
+
+        if (res.ok) {
+            navigate('/daily');
+        }
     };
 
     return (
