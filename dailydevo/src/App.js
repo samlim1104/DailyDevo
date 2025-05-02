@@ -19,7 +19,7 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/daily" element={<DailyDevo />} />
-              <Route path="/submission" element={<DevoSubmission />} />
+              <Route path="/upload" element={<DevoSubmission />} />
             </Routes>
       </Router>
     );

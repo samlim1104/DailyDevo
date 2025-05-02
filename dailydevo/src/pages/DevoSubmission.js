@@ -1,10 +1,42 @@
 // pages/DevoSubmission.js
-import React from 'react';
+import React, {useState} from 'react';
+import { useNavigate } from 'react-router-dom';
 import LoggedInHeader from '../components/Header/LoggedInHeader.js';
 import Button from '../components/Header/Button.js';
 
 function DevoSubmission() {
+    const [file, setFile] = useState(null);
+    const navigate = useNavigate();
     
+    const handleFileChange = (e) => {
+        setFile(e.target.files[0]);
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        if (!file) return;
+
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("username", username);
+        formData.append("password", password);
+    
+        try {
+            const response = await fetch('/api/upload-devo', {
+                method: 'POST',
+                body: formData,
+            });
+
+            if (response.ok) {
+                navigate('/daily');
+            } else {
+                console.error('Failed to upload');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
+
     const contentStyle = {
         display: 'flex',
         justifyContent: 'center',
@@ -34,12 +66,17 @@ function DevoSubmission() {
             <div style={contentStyle}>
                 <div style={sectionStyle}>
                     <h2>Submit Your Devo Here!</h2>
-                        <Button label="Upload File" to="/daily"/>
+                    <form onSubmit={handleSubmit} style={{ marginTop: '20px' }}>
+                        <input type="file" onChange={handleFileChange} />
+                        <br />
+                        <button type="submit" style={{ marginTop: '20px' }}>
+                            Upload and Submit
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
     );
-  
 }
 
 export default DevoSubmission;
