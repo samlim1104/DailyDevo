@@ -7,4 +7,4 @@ const DevoSchema = new mongoose.Schema({
   username: { type: String, required: true }, // 👈 track uploader
 });
 
-module.exports = mongoose.model("Devo", DevoSchema);
+module.exports = mongoose.model('Devo', DevoSchema);

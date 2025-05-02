@@ -43,6 +43,7 @@ export default function Login() {
 
         if (res.ok) {
             navigate('/daily');
+            localStorage.setItem('username', username);
         }
     };
 

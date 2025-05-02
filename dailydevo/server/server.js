@@ -60,19 +60,13 @@ function formatDate(date = new Date()) {
 }
 
 app.post("/api/upload-devo", upload.single("file"), async (req, res) => {
-  const { username, password } = req.body;
+  const { username } = req.body;
 
-  if (!req.file || !username || !password) {
+  if (!req.file || !username) {
     return res.status(400).send("Missing file or credentials");
   }
 
   try {
-    const user = await User.findOne({ username });
-    if (!user) return res.status(400).send("User not found");
-
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(401).send("Incorrect password");
-
     const devo = new Devo({
       fileName: req.file.originalname,
       fileBuffer: req.file.buffer,

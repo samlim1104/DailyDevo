@@ -2,11 +2,11 @@
 import React, {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import LoggedInHeader from '../components/Header/LoggedInHeader.js';
-import Button from '../components/Header/Button.js';
 
 function DevoSubmission() {
     const [file, setFile] = useState(null);
     const navigate = useNavigate();
+    const username = localStorage.getItem("username");
     
     const handleFileChange = (e) => {
         setFile(e.target.files[0]);
@@ -19,7 +19,6 @@ function DevoSubmission() {
         const formData = new FormData();
         formData.append("file", file);
         formData.append("username", username);
-        formData.append("password", password);
     
         try {
             const response = await fetch('/api/upload-devo', {
