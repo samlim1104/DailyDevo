@@ -6,6 +6,8 @@ import Home from './pages/Home';
 import About from './pages/About';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import DailyDevo from "./pages/DailyDevo";
+import DevoSubmission from "./pages/DevoSubmission";
 
 function App() {
 
@@ -13,10 +15,13 @@ function App() {
       <Router>
             <Routes>
               <Route path="/" element={<Home />} />
-              {/* Add other pages here */}
               <Route path="/about" element={<About />} />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
+
+              <Route path="/daily" element={<DailyDevo />} />
+              <Route path="/submission" element={<DevoSubmission />} />
+
             </Routes>
       </Router>
     );
